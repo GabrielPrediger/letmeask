@@ -1,5 +1,5 @@
 import { useState, FormEvent } from 'react'
-import { useParams } from 'react-router-dom'
+import { Link, useParams, useHistory } from 'react-router-dom'
 
 import logoImg from '../assets/images/logo.svg'
 import { Button } from '../components/Button'
@@ -19,6 +19,7 @@ export function Room(){
 
     const parms = useParams<RoomParms>(); //generic, tipo um parametro
     const [newQuestion, setNewQuestion] = useState('');
+    const history = useHistory();
     
     const roomId = parms.id;
 
@@ -61,22 +62,29 @@ export function Room(){
                 authorId: user?.id,
             })
         }
+    }
 
+    async function handleEntryAdmin() {
+        //validar se é admin ou não
+            history.push(`/admin/rooms/${roomId}`)
     }
 
     return (
         <div id="page-room">
             <header>
                 <div className="content">
-                    <img src={logoImg} alt="Let me Ask"/>
-                    <RoomCode code={roomId} />
+                    <Link className="img-link" to={'/'}><img src={logoImg} alt="Let me Ask"/></Link>
+                    <div>
+                        <button className="entry-admin" onClick={() => handleEntryAdmin()}>Admin</button>
+                        <RoomCode code={roomId} />
+                    </div>
 
                 </div>
             </header>
             
             <main className="content">
                 <div className="room-title">
-                    <h1>Sala {title}</h1>
+                    <h1>Sala <span className="room-name">{title}</span></h1>
                     { questions.length > 0 && <span> {questions.length} pergunta(s)</span> }
                 </div>
 

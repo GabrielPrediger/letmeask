@@ -1,4 +1,4 @@
-import { useParams, useHistory } from 'react-router-dom'
+import { useParams, useHistory, Link } from 'react-router-dom'
 
 import deleteImg from '../assets/images/delete.svg'
 import logoImg from '../assets/images/logo.svg'
@@ -56,7 +56,7 @@ export function AdminRoom(){
         <div id="page-room">
             <header>
                 <div className="content">
-                    <img src={logoImg} alt="Let me Ask"/>
+                    <Link className="img-link" to={'/'}><img src={logoImg} alt="Let me Ask"/></Link>
                     <div>
                         <RoomCode code={roomId} />
                         <Button 
@@ -72,7 +72,7 @@ export function AdminRoom(){
             
             <main className="content">
                 <div className="room-title">
-                    <h1>Sala {title}</h1>
+                    <h1>Sala <span className="room-name">{title}</span></h1>
                     { questions.length > 0 && <span> {questions.length} pergunta(s)</span> }
                 </div>
                 <div className="question-list">
